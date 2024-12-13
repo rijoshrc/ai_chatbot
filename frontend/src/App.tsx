@@ -1,15 +1,15 @@
 import { FrappeProvider } from "frappe-react-sdk";
-import Home from "./pages/Home";
+import LoginPage from "./pages/LoginPage";
 function App() {
   return (
-    <div className="App">
+    <main className="h-screen">
       <FrappeProvider
         socketPort={import.meta.env.VITE_SOCKET_PORT}
         siteName={import.meta.env.VITE_SITE_NAME}
       >
-        <Home />
+        <LoginPage />
       </FrappeProvider>
-    </div>
+    </main>
   );
 }
 
