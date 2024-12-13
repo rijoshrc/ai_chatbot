@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AuthResponse, useFrappeAuth } from "frappe-react-sdk";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 import { z } from "zod";
 
 const loginSchema = z.object({
@@ -25,7 +26,9 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 type Props = {};
 
 const LoginForm = (props: Props) => {
-  const { isLoading, login } = useFrappeAuth();
+  const { isLoading, login, updateCurrentUser, getUserCookie } =
+    useFrappeAuth();
+  const navigate = useNavigate();
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -42,6 +45,7 @@ const LoginForm = (props: Props) => {
         password: values.password,
       });
       console.log(authResponse, "authResponse");
+      navigate("/");
     } catch (e: any) {
       const err = e as AuthResponse;
 
@@ -97,6 +101,15 @@ const LoginForm = (props: Props) => {
           Login
         </Button>
       </form>
+      <Button
+        onClick={() => {
+          updateCurrentUser();
+          navigate("/test");
+          getUserCookie();
+        }}
+      >
+        Test
+      </Button>
     </Form>
   );
 };
