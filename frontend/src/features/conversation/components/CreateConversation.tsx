@@ -27,8 +27,7 @@ const formSchema = z.object({
     )
     .refine((files) => files[0]?.type === "application/pdf", {
       message: "Only PDF files are allowed",
-    })
-    .optional(),
+    }),
 });
 
 type Props = {};

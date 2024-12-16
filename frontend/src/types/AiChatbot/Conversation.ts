@@ -14,5 +14,5 @@ export interface Conversation {
   /**	User : Link - User	*/
   user?: string;
   /**	File : Attach	*/
-  file?: string;
+  file: string;
 }

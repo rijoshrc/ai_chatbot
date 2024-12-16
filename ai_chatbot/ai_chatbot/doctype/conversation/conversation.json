@@ -29,12 +29,13 @@
    "fieldname": "file",
    "fieldtype": "Attach",
    "in_list_view": 1,
-   "label": "File"
+   "label": "File",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-12-16 13:38:45.660409",
+ "modified": "2024-12-16 17:25:48.230795",
  "modified_by": "Administrator",
  "module": "Ai Chatbot",
  "name": "Conversation",
