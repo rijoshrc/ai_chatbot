@@ -1,5 +1,3 @@
-import { ChevronsUpDown, Settings } from "lucide-react";
-
 import {
   Sidebar,
   SidebarContent,
@@ -12,9 +10,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { useFrappeGetDocList } from "frappe-react-sdk";
 import { Conversation } from "@/types/AiChatbot/Conversation";
-import { NavUser } from "./NavUser";
+import { useFrappeGetDocList } from "frappe-react-sdk";
+import NavUser from "./NavUser";
 
 export function AppSidebar() {
   const { data } = useFrappeGetDocList<Conversation>("Conversation", {
@@ -55,13 +53,7 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <NavUser
-          user={{
-            name: "Rijosh",
-            email: "m@example.com",
-            avatar: "",
-          }}
-        />
+        <NavUser />
       </SidebarFooter>
     </Sidebar>
   );
