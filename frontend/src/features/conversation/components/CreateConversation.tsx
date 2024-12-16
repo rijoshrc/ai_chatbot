@@ -43,11 +43,39 @@ const CreateConversation = (props: Props) => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // createDoc("Conversation", values);
+  async function uploadFile(file: File): Promise<string> {
+    const formData = new FormData();
 
-    console.log(typeof values.file, values.file);
+    formData.append("file", file);
+    formData.append("file_name", file.name);
+    formData.append("is_private", "0");
+
+    const response = await fetch("/api/method/upload_file", {
+      method: "POST",
+      body: formData,
+      credentials: "include", // To include Frappe session cookies
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to upload file");
+    }
+
+    const data = await response.json();
+    return data.message.file_url; // Return the uploaded file URL
   }
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (!values.file) return;
+
+    const fileUrl = await uploadFile(values.file[0]);
+
+    const docPayload = {
+      title: values.title,
+      file: fileUrl,
+    };
+    // @ts-ignore
+    createDoc("Conversation", docPayload);
+  };
 
   return (
     <Form {...form}>

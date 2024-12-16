@@ -23,6 +23,7 @@ const ChatForm = (props: Props) => {
 
     setInput("");
   };
+
   return (
     <form
       onSubmit={handleSubmit}

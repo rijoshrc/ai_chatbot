@@ -21,6 +21,7 @@ import {
   useFrappeGetDocList,
 } from "frappe-react-sdk";
 import ChatForm from "./ChatForm";
+import CreateConversation from "@/features/conversation/components/CreateConversation";
 
 const ChatList = () => {
   const [open, setOpen] = React.useState(false);
@@ -60,7 +61,7 @@ const ChatList = () => {
               Make changes to your profile here. Click save when you're done.
             </DialogDescription>
           </DialogHeader>
-          <div>Tsasad</div>
+          <CreateConversation />
           <DialogFooter>
             <Button type="submit">Save changes</Button>
           </DialogFooter>
