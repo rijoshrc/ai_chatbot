@@ -3,11 +3,15 @@ import { Input } from "@/components/ui/input";
 import { useFrappeCreateDoc } from "frappe-react-sdk";
 import { Send } from "lucide-react";
 import { useState } from "react";
+import { useParams } from "react-router";
 
 type Props = {};
 
 const ChatForm = (props: Props) => {
   const [input, setInput] = useState("");
+
+  const { conversationId } = useParams();
+
   const inputLength = input.trim().length;
 
   const { createDoc } = useFrappeCreateDoc();
@@ -17,7 +21,7 @@ const ChatForm = (props: Props) => {
     if (inputLength === 0) return;
     await createDoc("Message", {
       text: input,
-      conversation: "CN-0007",
+      conversation: conversationId,
       type: "User",
     });
 

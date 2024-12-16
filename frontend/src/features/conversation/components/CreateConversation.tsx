@@ -13,6 +13,7 @@ import {
 import { Input } from "../../../components/ui/input";
 import { useFrappeCreateDoc } from "frappe-react-sdk";
 import { Conversation } from "@/types/AiChatbot/Conversation";
+import { useNavigate } from "react-router";
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -33,6 +34,8 @@ const formSchema = z.object({
 type Props = {};
 
 const CreateConversation = (props: Props) => {
+  const navigate = useNavigate();
+
   const { createDoc } = useFrappeCreateDoc<Conversation>();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -73,7 +76,9 @@ const CreateConversation = (props: Props) => {
       file: fileUrl,
     };
     // @ts-ignore
-    createDoc("Conversation", docPayload);
+    const res = await createDoc("Conversation", docPayload);
+
+    navigate(res.name);
   };
 
   return (

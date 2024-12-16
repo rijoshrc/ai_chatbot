@@ -2,6 +2,8 @@ import LoginPage from "@/pages/LoginPage"; // Your login page component
 import { Navigate, Route, Routes } from "react-router";
 import HomePage from "@/pages/HomePage";
 import { useFrappeAuth } from "frappe-react-sdk";
+import ChatPage from "@/pages/ChatPage";
+import ConversationPage from "@/pages/ConversationPage";
 
 const AppRoutes = () => {
   const { currentUser, isValidating } = useFrappeAuth();
@@ -16,11 +18,13 @@ const AppRoutes = () => {
         path="/login"
         element={!currentUser ? <LoginPage /> : <Navigate to="/" />}
       />
-
       <Route
         path="/"
         element={currentUser ? <HomePage /> : <Navigate to="/login" />}
-      />
+      >
+        <Route index element={<ConversationPage />} />
+        <Route path=":conversationId" element={<ChatPage />} />
+      </Route>
 
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>

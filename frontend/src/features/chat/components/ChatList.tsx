@@ -2,33 +2,22 @@ import { Plus } from "lucide-react";
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
-import { DialogFooter, DialogHeader } from "@/components/ui/dialog";
-import {
-  Tooltip,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { Message } from "@/types/AiChatbot/Message";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-} from "@radix-ui/react-dialog";
 import {
   useFrappeDocTypeEventListener,
   useFrappeGetDocList,
 } from "frappe-react-sdk";
 import ChatForm from "./ChatForm";
-import CreateConversation from "@/features/conversation/components/CreateConversation";
+import { useNavigate, useParams } from "react-router";
 
 const ChatList = () => {
-  const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate();
+  const { conversationId } = useParams();
 
   const { data, mutate } = useFrappeGetDocList<Message>("Message", {
     fields: ["text", "type", "name"],
-    filters: [["conversation", "=", "CN-0007"]],
+    filters: [["conversation", "=", conversationId + ""]],
   });
 
   useFrappeDocTypeEventListener("Message", () => {
@@ -38,35 +27,16 @@ const ChatList = () => {
   return (
     <div className="relative h-full pt-10">
       <div className="absolute top-2 right-2">
-        <TooltipProvider delayDuration={0}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                size="icon"
-                variant="outline"
-                className="ml-auto rounded-full"
-                onClick={() => setOpen(true)}
-              >
-                <Plus />
-              </Button>
-            </TooltipTrigger>
-          </Tooltip>
-        </TooltipProvider>
+        <Button
+          size="icon"
+          variant="outline"
+          className="ml-auto rounded-full"
+          onClick={() => navigate("/")}
+        >
+          <Plus />
+        </Button>
       </div>
-      <Dialog open={open}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Edit profile</DialogTitle>
-            <DialogDescription>
-              Make changes to your profile here. Click save when you're done.
-            </DialogDescription>
-          </DialogHeader>
-          <CreateConversation />
-          <DialogFooter>
-            <Button type="submit">Save changes</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+
       <div className="space-y-4 ">
         {data?.map((message) => (
           <div

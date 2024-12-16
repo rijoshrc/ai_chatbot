@@ -16,6 +16,7 @@ import {
   useFrappeGetDocList,
 } from "frappe-react-sdk";
 import NavUser from "./NavUser";
+import { Link, NavLink } from "react-router";
 
 export function AppSidebar() {
   const { data, mutate } = useFrappeGetDocList<Conversation>("Conversation", {
@@ -49,9 +50,9 @@ export function AppSidebar() {
               {data?.map((conversation) => (
                 <SidebarMenuItem key={conversation.name}>
                   <SidebarMenuButton asChild>
-                    <a href="#">
+                    <NavLink to={"/" + conversation.name}>
                       <span>{conversation.title}</span>
-                    </a>
+                    </NavLink>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
