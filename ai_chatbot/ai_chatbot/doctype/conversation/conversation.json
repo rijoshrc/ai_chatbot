@@ -23,20 +23,18 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "User",
-   "options": "User",
-   "reqd": 1
+   "options": "User"
   },
   {
    "fieldname": "file",
    "fieldtype": "Attach",
    "in_list_view": 1,
-   "label": "File",
-   "reqd": 1
+   "label": "File"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-12-13 14:19:19.536808",
+ "modified": "2024-12-16 13:38:45.660409",
  "modified_by": "Administrator",
  "module": "Ai Chatbot",
  "name": "Conversation",

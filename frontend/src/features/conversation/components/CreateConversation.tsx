@@ -11,6 +11,8 @@ import {
   FormMessage,
 } from "../../../components/ui/form";
 import { Input } from "../../../components/ui/input";
+import { useFrappeCreateDoc } from "frappe-react-sdk";
+import { Conversation } from "@/types/AiChatbot/Conversation";
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -25,12 +27,15 @@ const formSchema = z.object({
     )
     .refine((files) => files[0]?.type === "application/pdf", {
       message: "Only PDF files are allowed",
-    }),
+    })
+    .optional(),
 });
 
 type Props = {};
 
 const CreateConversation = (props: Props) => {
+  const { createDoc } = useFrappeCreateDoc<Conversation>();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -39,10 +44,9 @@ const CreateConversation = (props: Props) => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log({
-      title: values.title,
-      file: values.file[0], // Access the selected file
-    });
+    // createDoc("Conversation", values);
+
+    console.log(typeof values.file, values.file);
   }
 
   return (

@@ -6,7 +6,7 @@ const SidebarLayout = ({ children }: { children: React.ReactNode }) => {
     <SidebarProvider>
       <AppSidebar />
       <SidebarTrigger />
-      <main className="p-5">{children}</main>
+      <main className="p-5 w-full">{children}</main>
     </SidebarProvider>
   );
 };

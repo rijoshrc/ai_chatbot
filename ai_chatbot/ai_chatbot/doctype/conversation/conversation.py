@@ -7,6 +7,8 @@ from frappe.model.document import Document
 
 class Conversation(Document):
 	def before_validate(self):
+		
 		user = frappe.get_user().doc.full_name
+		print(self.title,user,self.file)
 		self.user = user
 	pass

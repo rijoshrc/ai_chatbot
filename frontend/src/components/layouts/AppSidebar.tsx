@@ -11,12 +11,19 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { Conversation } from "@/types/AiChatbot/Conversation";
-import { useFrappeGetDocList } from "frappe-react-sdk";
+import {
+  useFrappeDocTypeEventListener,
+  useFrappeGetDocList,
+} from "frappe-react-sdk";
 import NavUser from "./NavUser";
 
 export function AppSidebar() {
-  const { data } = useFrappeGetDocList<Conversation>("Conversation", {
+  const { data, mutate } = useFrappeGetDocList<Conversation>("Conversation", {
     fields: ["title", "user", "name"],
+  });
+
+  useFrappeDocTypeEventListener("Conversation", () => {
+    mutate();
   });
 
   return (
@@ -40,7 +47,7 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {data?.map((conversation) => (
-                <SidebarMenuItem>
+                <SidebarMenuItem key={conversation.name}>
                   <SidebarMenuButton asChild>
                     <a href="#">
                       <span>{conversation.title}</span>

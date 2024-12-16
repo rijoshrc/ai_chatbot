@@ -30,8 +30,6 @@ const NavUser = () => {
 
   const { currentUser, logout } = useFrappeAuth();
 
-  const handleLogoutClick = () => {};
-
   return (
     <SidebarMenu>
       <SidebarMenuItem>
