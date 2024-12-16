@@ -2,17 +2,18 @@ import ConversationList from "@/features/conversation/components/ConversationLis
 import CreateConversation from "@/features/conversation/components/CreateConversation";
 import { Button } from "@/components/ui/button";
 import { useFrappeAuth } from "frappe-react-sdk";
+import SidebarLayout from "@/components/layouts/SidebarLayout";
 
 type Props = {};
 
 const HomePage = (props: Props) => {
   const { logout } = useFrappeAuth();
   return (
-    <div className="">
+    <SidebarLayout>
       <ConversationList />
       <CreateConversation />
       <Button onClick={logout}>Logout</Button>
-    </div>
+    </SidebarLayout>
   );
 };
 

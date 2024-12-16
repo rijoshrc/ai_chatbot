@@ -11,7 +11,6 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AuthResponse, useFrappeAuth } from "frappe-react-sdk";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
 import { z } from "zod";
 
 const loginSchema = z.object({
@@ -28,7 +27,6 @@ type Props = {};
 const LoginForm = (props: Props) => {
   const { isLoading, login, updateCurrentUser, getUserCookie } =
     useFrappeAuth();
-  const navigate = useNavigate();
 
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
@@ -38,14 +36,13 @@ const LoginForm = (props: Props) => {
     },
   });
 
-  async function onSubmit(values: LoginFormValues) {
+  const onSubmit = async (values: LoginFormValues) => {
     try {
-      const authResponse = await login({
+      await login({
         username: values.email,
         password: values.password,
       });
-      console.log(authResponse, "authResponse");
-      navigate("/");
+      window.location.replace(`/`);
     } catch (e: any) {
       const err = e as AuthResponse;
 
@@ -55,7 +52,7 @@ const LoginForm = (props: Props) => {
         message: err.message || "An unexpected error occurred",
       });
     }
-  }
+  };
 
   return (
     <Form {...form}>

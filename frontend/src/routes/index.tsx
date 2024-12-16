@@ -6,7 +6,6 @@ import { useFrappeAuth } from "frappe-react-sdk";
 const AppRoutes = () => {
   const { currentUser, isValidating } = useFrappeAuth();
 
-  // Show a loading state while checking auth
   if (isValidating) {
     return <div>Loading...</div>;
   }
