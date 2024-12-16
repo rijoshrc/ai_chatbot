@@ -98,15 +98,6 @@ const LoginForm = (props: Props) => {
           Login
         </Button>
       </form>
-      <Button
-        onClick={() => {
-          updateCurrentUser();
-          navigate("/test");
-          getUserCookie();
-        }}
-      >
-        Test
-      </Button>
     </Form>
   );
 };
