@@ -75,6 +75,8 @@ const CreateConversation = (props: Props) => {
       title: values.title,
       file: fileUrl,
     };
+
+    console.log(docPayload);
     // @ts-ignore
     const res = await createDoc("Conversation", docPayload);
 
