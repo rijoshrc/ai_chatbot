@@ -12,19 +12,18 @@ import re
 
 class Conversation(Document):
 	def before_validate(self):
-		print(self.file)
-		print(self.title)
 		user = frappe.get_user().doc.full_name
 		self.user = user
 	
 
 	def after_insert(self):
+		os.environ["GEMINI_API_KEY"]="AIzaSyAQzM_DB_AD-hsOw4BhNbkU7NtS-q4eCbY"
 		file_path = get_file_path(self.file)
 		text = load_pdf(file_path)
 		s_text = split_text(text)
-		print(s_text)
-		# db, name = create_chroma_db(split_text, os.path.join("ai_chatbot", "data"), "ai_chatbot")
-
+		db_path = os.path.join("ai_chatbot", "vector")
+		print(db_path)
+		db, name = create_chroma_db(s_text, db_path, "ai_chatbot")
 		
 	pass
 
