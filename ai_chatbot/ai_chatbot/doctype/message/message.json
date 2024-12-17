@@ -13,7 +13,7 @@
  "fields": [
   {
    "fieldname": "text",
-   "fieldtype": "Data",
+   "fieldtype": "Long Text",
    "in_list_view": 1,
    "label": "Text",
    "reqd": 1
@@ -37,7 +37,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-12-13 14:12:05.195351",
+ "modified": "2024-12-17 12:55:19.102493",
  "modified_by": "Administrator",
  "module": "Ai Chatbot",
  "name": "Message",

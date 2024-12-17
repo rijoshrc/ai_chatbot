@@ -21,9 +21,8 @@ class Conversation(Document):
 		file_path = get_file_path(self.file)
 		text = load_pdf(file_path)
 		s_text = split_text(text)
-		db_path = os.path.join("ai_chatbot", "vector")
-		print(db_path)
-		db, name = create_chroma_db(s_text, db_path, "ai_chatbot")
+		db_path = os.path.join("db", "vector")
+		db, name = create_chroma_db(s_text, db_path, self.name)
 		
 	pass
 

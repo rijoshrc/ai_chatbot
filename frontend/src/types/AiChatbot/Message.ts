@@ -10,7 +10,7 @@ export interface Message{
 	parentfield?: string
 	parenttype?: string
 	idx?: number
-	/**	Text : Data	*/
+	/**	Text : Long Text	*/
 	text: string
 	/**	Type : Select	*/
 	type: "User" | "System"
