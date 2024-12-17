@@ -10,10 +10,13 @@ import {
 } from "frappe-react-sdk";
 import ChatForm from "./ChatForm";
 import { useNavigate, useParams } from "react-router";
+import { useSidebar } from "@/components/ui/sidebar";
 
 const ChatList = () => {
   const navigate = useNavigate();
   const { conversationId } = useParams();
+
+  const { open } = useSidebar();
 
   const { data, mutate } = useFrappeGetDocList<Message>("Message", {
     fields: ["text", "type", "name"],
@@ -25,7 +28,11 @@ const ChatList = () => {
   });
 
   return (
-    <div className="relative h-full pt-10">
+    <div
+      className={`relative h-full pt-10 ${
+        open ? "md:w-[calc(100%-16rem)]" : ""
+      }`}
+    >
       <div className="absolute top-2 right-2">
         <Button
           size="icon"
