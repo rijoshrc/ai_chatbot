@@ -23,20 +23,23 @@ class Conversation(Document):
             file_url=self.file,
             queue="default"
         )
-		
+
 	pass
 
 def process_conversation(conversation, file_url):
+	# create embedding
 	os.environ["GEMINI_API_KEY"]="AIzaSyAQzM_DB_AD-hsOw4BhNbkU7NtS-q4eCbY"
 	file_path = get_file_path(file_url)
 	text = load_pdf(file_path)
 	s_text = split_text(text)
 	db_path = os.path.join("db", "vector")
 	db, name = create_chroma_db(s_text, db_path, conversation)
+
+	# update conversation status
 	conv_doc = frappe.get_doc("Conversation", conversation)
-	conv_doc.embedding_status = "Completed"
-	# conv_doc.embedding_content = text
-	conv_doc.save()
+	conv_doc.db_set('embedding_status', "Completed", commit=True)
+	conv_doc.db_set('embedding_content', text, commit=True)
+	
 
 def get_file_path(file_url):
 	filename = os.path.basename(file_url)
