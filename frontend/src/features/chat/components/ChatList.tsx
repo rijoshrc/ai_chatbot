@@ -28,7 +28,7 @@ const ChatList = () => {
   });
 
   return (
-    <div className={`relative h-full pt-10 `}>
+    <div className={`h-full pt-10 overflow-hidden h-max-screen max-h-screen `}>
       <div className="absolute top-2 right-2">
         <Button
           size="icon"
@@ -40,7 +40,7 @@ const ChatList = () => {
         </Button>
       </div>
 
-      <div className="space-y-4 flex flex-col overflow-y-auto">
+      <div className="space-y-4 flex flex-col overflow-y-auto pb-20 max-h-full">
         {data?.map((message) => (
           <div
             key={message.name}
@@ -54,7 +54,11 @@ const ChatList = () => {
           </div>
         ))}
       </div>
-      <div className="absolute bottom-0 w-full left-0 right-0 p-2.5">
+      <div
+        className={`absolute bottom-0 right-0 p-2.5 bg-background ${
+          open ? "md:left-[16rem]" : "left-0"
+        }`}
+      >
         <ChatForm />
       </div>
     </div>
