@@ -12,18 +12,24 @@ import google.generativeai as genai
 class Message(Document):
     def after_insert(self):
         if self.type == "User":
-            os.environ["GEMINI_API_KEY"] = "AIzaSyAQzM_DB_AD-hsOw4BhNbkU7NtS-q4eCbY"
-            db_path = os.path.join("db", "vector")
-            db = load_chroma_collection(db_path, self.conversation)
-            query = self.text
-            answer = generate_answer(db,query)
-            print(answer,self.conversation)
-            doc = frappe.new_doc('Message')
-            doc.text = answer
-            doc.conversation = self.conversation
-            doc.type = "System"
-            doc.insert()    
+            frappe.enqueue(
+				process_user_message, conversation=self.conversation, text=self.text, queue="default", enqueue_after_commit=True
+			)
+  
     pass
+
+
+def process_user_message(conversation,text):
+    os.environ["GEMINI_API_KEY"] = "AIzaSyAQzM_DB_AD-hsOw4BhNbkU7NtS-q4eCbY"
+    db_path = os.path.join("db", "vector")
+    db = load_chroma_collection(db_path, conversation)
+    query = text
+    answer = generate_answer(db,query)
+    doc = frappe.new_doc('Message')
+    doc.text = answer
+    doc.conversation = conversation
+    doc.type = "System"
+    doc.insert()
 
 
 def load_chroma_collection(path, name):
