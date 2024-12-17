@@ -28,11 +28,7 @@ const ChatList = () => {
   });
 
   return (
-    <div
-      className={`relative h-full pt-10 ${
-        open ? "md:w-[calc(100%-16rem)]" : ""
-      }`}
-    >
+    <div className={`relative h-full pt-10 `}>
       <div className="absolute top-2 right-2">
         <Button
           size="icon"
@@ -44,16 +40,15 @@ const ChatList = () => {
         </Button>
       </div>
 
-      <div className="space-y-4 ">
+      <div className="space-y-4 flex flex-col overflow-y-auto">
         {data?.map((message) => (
           <div
             key={message.name}
-            className={cn(
-              "flex w-max max-w-[75%] flex-col gap-2 rounded-lg px-3 py-2 text-sm",
+            className={`p-2.5 rounded-lg ${
               message.type === "User"
-                ? "ml-auto bg-primary text-primary-foreground"
-                : "bg-muted"
-            )}
+                ? "ml-auto bg-primary text-white"
+                : "mr-auto bg-muted max-w-[75%]"
+            }`}
           >
             {message.text}
           </div>

@@ -17,19 +17,30 @@ class Conversation(Document):
 	
 
 	def after_insert(self):
-		os.environ["GEMINI_API_KEY"]="AIzaSyAQzM_DB_AD-hsOw4BhNbkU7NtS-q4eCbY"
-		file_path = get_file_path(self.file)
-		text = load_pdf(file_path)
-		s_text = split_text(text)
-		db_path = os.path.join("db", "vector")
-		db, name = create_chroma_db(s_text, db_path, self.name)
+		frappe.enqueue(
+            process_conversation,
+            conversation=self.name,
+            file_url=self.file,
+            queue="default"
+        )
 		
 	pass
 
+def process_conversation(conversation, file_url):
+	os.environ["GEMINI_API_KEY"]="AIzaSyAQzM_DB_AD-hsOw4BhNbkU7NtS-q4eCbY"
+	file_path = get_file_path(file_url)
+	text = load_pdf(file_path)
+	s_text = split_text(text)
+	db_path = os.path.join("db", "vector")
+	db, name = create_chroma_db(s_text, db_path, conversation)
+	conv_doc = frappe.get_doc("Conversation", conversation)
+	conv_doc.embedding_status = "Completed"
+	# conv_doc.embedding_content = text
+	conv_doc.save()
 
 def get_file_path(file_url):
 	filename = os.path.basename(file_url)
-	private_files_path = frappe.utils.get_files_path(is_private=True)
+	private_files_path = frappe.utils.get_files_path()
 	file_path = os.path.join(private_files_path, filename)
 	return file_path
 
