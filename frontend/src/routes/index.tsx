@@ -6,9 +6,9 @@ import ChatPage from "@/pages/ChatPage";
 import ConversationPage from "@/pages/ConversationPage";
 
 const AppRoutes = () => {
-  const { currentUser, isValidating } = useFrappeAuth();
+  const { currentUser, isValidating, isLoading } = useFrappeAuth();
 
-  if (isValidating) {
+  if (isValidating || isLoading) {
     return <div>Loading...</div>;
   }
 
