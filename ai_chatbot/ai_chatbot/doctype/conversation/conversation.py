@@ -28,7 +28,6 @@ class Conversation(Document):
 
 def process_conversation(conversation, file_url):
 	# create embedding
-	os.environ["GEMINI_API_KEY"]="AIzaSyAQzM_DB_AD-hsOw4BhNbkU7NtS-q4eCbY"
 	file_path = get_file_path(file_url)
 	text = load_pdf(file_path)
 	s_text = split_text(text)

@@ -20,7 +20,6 @@ class Message(Document):
 
 
 def process_user_message(conversation,text):
-    os.environ["GEMINI_API_KEY"] = "AIzaSyAQzM_DB_AD-hsOw4BhNbkU7NtS-q4eCbY"
     db_path = os.path.join("db", "vector")
     db = load_chroma_collection(db_path, conversation)
     query = text
@@ -48,11 +47,13 @@ def generate_answer(db,query):
 
 
 def generate_response(prompt):
-    gemini_api_key = os.getenv("GEMINI_API_KEY")
+    settings = frappe.get_doc('Chatbot Settings')
+    gemini_api_key = settings.api_key
     if not gemini_api_key:
         raise ValueError("Gemini API Key not provided. Please provide GEMINI_API_KEY as an environment variable")
     genai.configure(api_key=gemini_api_key)
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    settings = frappe.get_doc('Chatbot Settings')
+    model = genai.GenerativeModel(settings.generative_model)
     answer = model.generate_content(prompt)
     return answer.text
 
