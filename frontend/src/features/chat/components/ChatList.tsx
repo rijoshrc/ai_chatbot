@@ -35,7 +35,7 @@ const ChatList = () => {
     mutate();
   });
 
-  const isProcessing = conversation?.embedding_status === "Processing";
+  // const isProcessing = conversation?.embedding_status === "Processing";
 
   // if (isProcessing)
   //   return (

@@ -15,7 +15,7 @@ import {
   useFrappeDocTypeEventListener,
   useFrappeGetDocList,
 } from "frappe-react-sdk";
-import { NavLink } from "react-router";
+import { NavLink, useParams } from "react-router";
 import NavUser from "./NavUser";
 
 export function AppSidebar() {
@@ -26,6 +26,8 @@ export function AppSidebar() {
   useFrappeDocTypeEventListener("Conversation", () => {
     mutate();
   });
+
+  const { conversationId } = useParams();
 
   return (
     <Sidebar>
@@ -48,7 +50,12 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {data?.map((conversation) => (
-                <SidebarMenuItem key={conversation.name}>
+                <SidebarMenuItem
+                  key={conversation.name}
+                  className={
+                    conversationId === conversation.name ? "bg-muted" : ""
+                  }
+                >
                   <SidebarMenuButton asChild>
                     <NavLink to={"/" + conversation.name}>
                       <span>{conversation.title}</span>
