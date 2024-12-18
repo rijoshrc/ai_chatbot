@@ -1,16 +1,16 @@
 import { Plus } from "lucide-react";
-import * as React from "react";
 
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { useSidebar } from "@/components/ui/sidebar";
+import { Conversation } from "@/types/AiChatbot/Conversation";
 import { Message } from "@/types/AiChatbot/Message";
 import {
   useFrappeDocTypeEventListener,
+  useFrappeGetDoc,
   useFrappeGetDocList,
 } from "frappe-react-sdk";
-import ChatForm from "./ChatForm";
 import { useNavigate, useParams } from "react-router";
-import { useSidebar } from "@/components/ui/sidebar";
+import ChatForm from "./ChatForm";
 
 const ChatList = () => {
   const navigate = useNavigate();
@@ -18,14 +18,31 @@ const ChatList = () => {
 
   const { open } = useSidebar();
 
+  if (!conversationId) return;
+
   const { data, mutate } = useFrappeGetDocList<Message>("Message", {
     fields: ["text", "type", "name"],
     filters: [["conversation", "=", conversationId + ""]],
   });
 
+  const { data: conversation } = useFrappeGetDoc<Conversation>(
+    "Conversation",
+    conversationId,
+    { fields: ["embedding_status"] }
+  );
+
   useFrappeDocTypeEventListener("Message", () => {
     mutate();
   });
+
+  const isProcessing = conversation?.embedding_status === "Processing";
+
+  // if (isProcessing)
+  //   return (
+  //     <div className="flex items-center justify-center h-full">
+  //       <Spinner>Processing your file..</Spinner>
+  //     </div>
+  //   );
 
   return (
     <div className={`h-full pt-10 overflow-hidden h-max-screen max-h-screen `}>

@@ -50,8 +50,14 @@
   }
  ],
  "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2024-12-17 16:10:20.633781",
+ "links": [
+  {
+   "link_doctype": "Message",
+   "link_fieldname": "conversation",
+   "table_fieldname": "Conversation"
+  }
+ ],
+ "modified": "2024-12-18 11:49:08.685238",
  "modified_by": "Administrator",
  "module": "Ai Chatbot",
  "name": "Conversation",

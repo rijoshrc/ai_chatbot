@@ -15,12 +15,12 @@ import {
   useFrappeDocTypeEventListener,
   useFrappeGetDocList,
 } from "frappe-react-sdk";
+import { NavLink } from "react-router";
 import NavUser from "./NavUser";
-import { Link, NavLink } from "react-router";
 
 export function AppSidebar() {
   const { data, mutate } = useFrappeGetDocList<Conversation>("Conversation", {
-    fields: ["title", "user", "name"],
+    fields: ["title", "user", "name", "embedding_status"],
   });
 
   useFrappeDocTypeEventListener("Conversation", () => {

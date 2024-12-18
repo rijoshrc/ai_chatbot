@@ -18,7 +18,9 @@ const ChatForm = (props: Props) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     if (inputLength === 0) return;
+
     await createDoc("Message", {
       text: input,
       conversation: conversationId,
