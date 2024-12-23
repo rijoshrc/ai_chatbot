@@ -243,4 +243,4 @@ app_license = "mit"
 # }
 
 
-website_route_rules = [{'from_route': '/chat/<path:app_path>', 'to_route': '/chat'},]
+website_route_rules = [{'from_route': '/chat/<path:app_path>', 'to_route': 'chat'},]

@@ -9,7 +9,7 @@ function App() {
         socketPort={import.meta.env.VITE_SOCKET_PORT}
         siteName={import.meta.env.VITE_SITE_NAME}
       >
-        <BrowserRouter>
+        <BrowserRouter basename={import.meta.env.VITE_BASE_PATH}>
           <AppRoutes />
         </BrowserRouter>
       </FrappeProvider>

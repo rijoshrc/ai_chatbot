@@ -26,7 +26,7 @@ const AppRoutes = () => {
         <Route path=":conversationId" element={<ChatPage />} />
       </Route>
 
-      <Route path="*" element={<Navigate to="/" />} />
+      {/* <Route path="*" element={<Navigate to="/" />} /> */}
     </Routes>
   );
 };
